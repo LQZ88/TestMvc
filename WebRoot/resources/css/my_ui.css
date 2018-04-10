@@ -1,0 +1,120 @@
+@CHARSET "UTF-8";
+
+*{ padding:0; margin:0; }
+body{ font-size:12px; }
+ul,li{ list-style:none; }
+
+/*------------------------------------------ easyui ---------------------------------------------*/
+
+/* dialog-toolbar */
+.dialog-toolbar{ padding:3px 5px; height:26px; overflow:hidden; }
+.dialog-toolbar .tl{ float:left; }
+.dialog-toolbar .tr{ float:right; padding-right:10px; }
+.dialog-toolbar .easyui-linkbutton{ float:left; }
+.dialog-toolbar .dialog-tool-separator{ margin:1px 5px; }
+/*------------------------------------------ easyui ---------------------------------------------*/
+
+/* tab */
+.tab{ width:100%; border-collapse:collapse; border-spacing:0; }
+.tab th{ width:120px; font-weight:normal; }
+.tab .code{ padding:0 6px 6px; text-align:right; font-family:verdana; }
+.tab .bor th{ background:#e0ecff; text-align:center; border:1px solid #95b8e7; font-size: 13px;}
+.tab .bor td{ padding:5px; background:#fff; border:1px solid #95b8e7; font-size: 13px;}
+.tab .bor .txt,.tab .bor .tarea{ border:1px solid #aebcd0; border-bottom-color:#eee; border-right-color:#eee; }
+.tab .bor .txt{ padding:0 3px; height:22px; line-height:22px; }
+.tab .bor .tw{ width:96%; }
+.tab .bor .t3{ width:98.5%; }
+.tab .bor .t5{ width:99%; }
+.tab .bor .tarea{ width:99.55%; overflow:block; }
+.tab .bor .tip{ display:inline-block; margin-left:5px; padding:4px 10px; background:#ffc; color:#000; border:1px solid #c93; position:absolute; }
+.tab .bor .msg{ display:inline-block; margin-left:3px; }
+.tab .bor .readonly{ color:#ccc; border-color:#eee; }
+
+/* tab */
+.tabList{ width:100%; background:#fff; border-collapse:collapse; border-spacing:0; }
+.tabList{ width:100%; border:1px solid #ddd; }
+.tabList th,.tabList td{ height:28px; line-height:28px;text-align:center; border:1px dotted #ccc; }
+.tabList thead th{ background:url(../images/thbg.jpg) repeat-x bottom; font-weight:normal; border-bottom:1px solid #ccc; }
+.tabList tbody td{ }
+.tabList tbody .hov{ background:#eaf2ff; }
+.tabList tbody .cur{ background:#fbec88; }
+
+/* rdc */
+.rdc{ line-height:120%; }
+.rdc:after{ display:block; content:""; clear:both; }
+.rdc *{ float:left; }
+.rdc span{ margin:0 6px 0 2px; }
+
+/* form */
+.formBody{padding-bottom:25px; background:#f5f9ff; }
+
+.formTitle,.formContent,.formCtr{ width:auto; margin:auto; }
+.formTitles,.formContents,.formCtrs{ margin:auto; }
+
+.formTitle,.formTitles{ padding:50px 0 10px 0; font-size:22px; font-weight:bold; text-align:center; }
+
+
+.formContent,.formContents{ padding-bottom:5px;  }
+.formContent .easyui-panel,.formContents .easyui-panel{ padding:10px; }
+
+.formCtl,.formCtls{ padding:15px; text-align:center; }
+.formCtl .easyui-linkbutton,.formCtls .easyui-linkbutton{ margin:0 3px; }
+
+/*------------------- fixedPosition -------------------*/
+#topDiv{
+	width: 100%;
+	position:fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+* html { background-image: url(about:blank); background-attachment: fixed;}/* IE6 bug */
+* html #topDiv { position:absolute; bottom:auto; _top:expression(eval(document.documentElement.scrollTop));}/* IE6 */
+/*------------------- End fixedPosition -------------------*/
+
+/* gridSearch */
+body .gridSearch {margin: 6px;}
+body .grid {margin: 6px;}
+.dgCtl{ padding:5px 0 0; text-align:center; }
+.dgCtl .easyui-linkbutton{ margin:0 5px; }
+
+/* datagrid */
+.datagrid{ }
+.datagrid .grid{ padding:0px; overflow-y:auto; }
+.datagrid .grid .panel-body{ border-bottom-color:#ddd; }
+.datagrid .gridSearch{ width:100%; position:absolute; bottom:0; left:0; }
+.datagrid .gridSearch .panel{ padding:5px; }
+.datagrid .gridSearch .easyui-panel{ width:100%; padding:10px; }
+.datagrid .easyui-pagination{ margin:0 5px; background:#f4f4f4; border:1px solid #95b8e7; border-top-color:#ddd;  }
+.datagrid .dgCtl{ padding:10px 0 0; text-align:center; }
+.datagrid .dgCtl .easyui-linkbutton{ margin:0 3px; }
+
+/* 弹出窗口 */
+.modalWindow{ width:500px; padding:10px; background:#fafafa; }
+.modalWindow .mwb{ padding:10px 0 0; text-align:center; }
+
+/*my扩展*/
+.update_dialog_div{margin:0 10px;}
+* html .update_dialog_div{width: 100%;}
+
+.panel-body-up{overflow: hidden;}
+/*div空行*/
+.space_div{padding:15px;}
+.span_font{ background:#e0ecff; text-align:center; border:1px solid #95b8e7; font-size: 13px;}
+/**设置圆角输入框*/
+.intext{ width: 200px; height: 22px;border-radius: 6px;border: 1px solid #ccc;-moz-border-radius: 6px;-webkit-border-radius: 6px;-webkit-appearance: none;outline: none;}
+.intextarea{ width: 100%; height: 80px;border-radius: 6px;border: 1px solid #ccc;-moz-border-radius: 6px;-webkit-border-radius: 6px;-webkit-appearance: none;outline: none;resize: none;}
+/**圆形div头像框*/
+body .divcircle{border-radius: 50%; border: 3px solid #eee; overflow: hidden;cursor: pointer;}
+
+.division{
+	margin-left:5px;
+	margin-right:5px
+}
+
+input[type="checkbox"] {
+	cursor: pointer;
+}
+input[type="radio"]{
+	cursor: pointer;
+}

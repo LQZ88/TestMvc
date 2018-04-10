@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvn.system.service.dao.DicInfoMapper">
+	<!-- 菜单资源管理 -->
+	<resultMap id="dicInfoMap" type="com.mvn.system.model.DicInfo">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="TYPE" jdbcType="VARCHAR" property="type" />
+		<result column="URL" jdbcType="VARCHAR" property="url" />
+		<result column="TARGET" jdbcType="VARCHAR" property="target" />
+		<result column="PAR_ID" jdbcType="INTEGER" property="parId" />
+		<result column="ORDER_NO" jdbcType="INTEGER" property="orderNo" />
+		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+		<result column="ISAVALIABLE" jdbcType="VARCHAR" property="isavaliable" />
+		<result column="ISPERMISSIONS" jdbcType="VARCHAR" property="ispermissions" />
+		<result column="ICON" jdbcType="VARCHAR" property="icon" />
+		<result column="ISLEVEL" jdbcType="VARCHAR" property="isLevel" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<sql id="dicInfoList">
+		ID, CODE, NAME, TYPE, URL, TARGET, PAR_ID, ORDER_NO, DESCRIPTION,
+		ISAVALIABLE, ISPERMISSIONS,
+		ICON, ISLEVEL, CREATE_TIME
+	</sql>
+	<select id="getDicInfoById" parameterType="java.lang.Integer" resultMap="dicInfoMap">
+		select * from dic_info where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="getDicInfoNextById" parameterType="java.lang.Integer" resultMap="dicInfoMap">
+		select * from dic_info where PAR_ID = #{parId,jdbcType=INTEGER}
+	</select>
+	<select id="getDicInfoByAll" resultMap="dicInfoMap">
+		select * from dic_info
+	</select>
+	<select id="findDicInfoByNameJson" resultType="java.util.HashMap">
+		select ID id,NAME name from dic_info
+	</select>
+	<select id="getdicInfoCode" parameterType="java.lang.String" resultMap="dicInfoMap">
+		select * from dic_info where CODE = #{code,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteDicInfo" parameterType="java.lang.Integer">
+		delete from dic_info where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="saveDicInfo" parameterType="com.mvn.system.model.DicInfo">
+		insert into dic_info (ID, CODE, NAME,
+		TYPE, URL, TARGET,
+		PAR_ID, ORDER_NO, DESCRIPTION,
+		ISAVALIABLE, ISPERMISSIONS, ICON,
+		ISLEVEL, CREATE_TIME)
+		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR},
+		#{parId,jdbcType=INTEGER}, #{orderNo,jdbcType=INTEGER},
+		#{description,jdbcType=VARCHAR},
+		#{isavaliable,jdbcType=VARCHAR}, #{ispermissions,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+		#{isLevel,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="updateDicInfo" parameterType="com.mvn.system.model.DicInfo">
+		update dic_info
+		<set>
+			<if test="code != null">
+				CODE = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="target != null">
+				TARGET = #{target,jdbcType=VARCHAR},
+			</if>
+			<if test="parId != null">
+				PAR_ID = #{parId,jdbcType=INTEGER},
+			</if>
+			<if test="orderNo != null">
+				ORDER_NO = #{orderNo,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="isavaliable != null">
+				ISAVALIABLE = #{isavaliable,jdbcType=VARCHAR},
+			</if>
+			<if test="ispermissions != null">
+				ISPERMISSIONS = #{ispermissions,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				ICON = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="isLevel != null">
+				ISLEVEL = #{isLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

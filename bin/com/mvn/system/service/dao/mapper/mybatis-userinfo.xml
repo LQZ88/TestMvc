@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvn.system.service.dao.UserInfoMapper">
+	<!-- 用户管理 -->
+	<resultMap id="UserInfoMap" type="com.mvn.system.model.UserInfo">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="usercode" jdbcType="VARCHAR" property="usercode" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="age" jdbcType="INTEGER" property="age" />
+		<result column="birthday" jdbcType="DATE" property="birthday" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="telephone" jdbcType="VARCHAR" property="telephone" />
+		<result column="emil" jdbcType="VARCHAR" property="emil" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="fileid" jdbcType="VARCHAR" property="fileid" />
+		<result column="state" jdbcType="BIT" property="state" />
+		<result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+		<result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+	</resultMap>
+	<sql id="UserInfoList">
+		id, usercode, username, sex, age, birthday, phone, telephone, emil, address,
+		fileid, state, createtime, updatetime
+	</sql>
+	<select id="getUserInfo" parameterType="com.mvn.system.model.UserInfo" resultMap="UserInfoMap">
+		select * from user_info
+		<where>
+			<if test="id !=null and id !=''">
+				and id = #{id}
+			</if>
+			<if test="usercode !=null and usercode !=''">
+				and usercode = #{usercode}
+			</if>
+		</where>
+	</select>
+	<resultMap id="UserInfoByMap" type="com.mvn.system.model.UserInfo" extends="UserInfoMap">
+		<result column="loginName" jdbcType="VARCHAR" property="loginname" />
+		<result column="loginId" jdbcType="VARCHAR" property="loginId" />
+	</resultMap>
+	<select id="getUserInfoByInfo" parameterType="com.mvn.system.model.UserInfo" resultMap="UserInfoByMap">
+		select t1.*,t2.id as loginId,t2.loginName from user_info as t1
+		join user_login_info as t2 on t1.id = t2.userId
+		<where>
+			<if test="id !=null and id !=''">
+				and t1.id = #{id}
+			</if>
+			<if test="username !=null and username !=''">
+				and t1.username like CONCAT('%',#{username},'%')
+			</if>
+			<if test="loginname !=null and loginname !=''">
+				and t2.loginName like CONCAT('%',#{loginname},'%')
+			</if>
+		</where>
+	</select>
+	<select id="getUserInfoByInfoCount" parameterType="com.mvn.system.model.UserInfo" resultType="java.lang.Integer">
+		select count(*) from user_info as t1
+		join user_login_info as t2 on t1.id = t2.userId
+		<where>
+			<if test="id !=null and id !=''">
+				and t1.id = #{id}
+			</if>
+			<if test="username !=null and username !=''">
+				and t1.username like CONCAT('%',#{username},'%')
+			</if>
+			<if test="loginname !=null and loginname !=''">
+				and t2.loginName like CONCAT('%',#{loginname},'%')
+			</if>
+		</where>
+	</select>
+	<resultMap id="UserInfoByLoginMap" type="com.mvn.system.model.UserInfo" extends="UserInfoMap">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+	    <result column="userId" jdbcType="VARCHAR" property="userid" />
+	    <result column="loginName" jdbcType="VARCHAR" property="loginname" />
+	    <result column="loginPass" jdbcType="VARCHAR" property="loginpass" />
+	    <result column="passCode" jdbcType="VARCHAR" property="passcode" />
+	    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+	    <result column="state" jdbcType="BIT" property="state" />
+	</resultMap>
+  	<insert id="saveUserInfoData" parameterType="com.mvn.system.model.UserInfo">
+		insert into user_info (id, usercode, username, sex, age, birthday, phone,
+		telephone, emil, address, fileid, state, createtime, updatetime)
+		values (#{id,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{phone,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR}, #{emil,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{fileid,jdbcType=VARCHAR}, #{state,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP},
+		#{updatetime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="editUserInfoData" parameterType="com.mvn.system.model.UserInfo">
+		update user_info
+		<set>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				age = #{age,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="emil != null">
+				emil = #{emil,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="fileid != null">
+				fileid = #{fileid,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=BIT},
+			</if>
+			<if test="updatetime != null">
+				updatetime = #{updatetime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	
+	
+	<!-- 用户登录管理 -->
+	<resultMap id="UserLoginInfoMap" type="com.mvn.system.model.UserLoginInfo">
+	 	<id column="id" jdbcType="VARCHAR" property="id" />
+	    <result column="userId" jdbcType="VARCHAR" property="userid" />
+	    <result column="loginName" jdbcType="VARCHAR" property="loginname" />
+	    <result column="loginPass" jdbcType="VARCHAR" property="loginpass" />
+	    <result column="passCode" jdbcType="VARCHAR" property="passcode" />
+	    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+	    <result column="state" jdbcType="BIT" property="state" />
+	</resultMap>
+	<select id="getLoginUserInfo" parameterType="java.lang.String" resultMap="UserLoginInfoMap">
+	    select t1.* from user_login_info as t1 
+		join user_info as t2 on t1.userId = t2.id
+		where t1.state =1 and t2.state =1 and t1.loginName = #{loginname,jdbcType=VARCHAR}
+	</select>
+	<insert id="saveLoginUserInfoData" parameterType="com.mvn.system.model.UserLoginInfo">
+    	insert into user_login_info (id, userId, loginName, loginPass, passCode, createTime, state)
+    	values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
+      	#{loginpass,jdbcType=VARCHAR}, #{passcode,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT})
+  	</insert>
+  	<update id="editLoginUserInfoData" parameterType="com.mvn.system.model.UserLoginInfo">
+    	update user_login_info
+	    <set>
+	      <if test="loginname != null">
+	        loginName = #{loginname,jdbcType=VARCHAR},
+	      </if>
+	      <if test="loginpass != null">
+	        loginPass = #{loginpass,jdbcType=VARCHAR},
+	      </if>
+	      <if test="passcode != null">
+	      	passCode = #{passcode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="state != null">
+	        state = #{state,jdbcType=BIT},
+	      </if>
+	    </set>
+	    <where>
+	    	<if test="id != null">
+				id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="userid != null">
+				and userId = #{userid,jdbcType=VARCHAR}
+			</if>
+	    </where>
+  	</update>
+
+
+	<!-- 用户角色管理 -->
+	<resultMap id="UserRoleMap" type="com.mvn.system.model.UserRoleInfo">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="roleId" jdbcType="VARCHAR" property="roleid" />
+		<result column="userId" jdbcType="VARCHAR" property="userid" />
+		<result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+		<result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+		<result column="state" jdbcType="BIT" property="state" />
+	</resultMap>
+	<sql id="SqlWhere">
+		<where>
+			<if test="id !=null and id !=''">
+				and id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="roleid !=null and roleid !=''">
+				and roleId = #{roleid,jdbcType=VARCHAR}
+			</if>
+			<if test="userid !=null and userid !=''">
+				and userId = #{userid,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="selectByUserRoleInfo" parameterType="com.mvn.system.model.UserRoleInfo" resultMap="UserRoleMap">
+		select * from user_role_info
+		<include refid="SqlWhere"></include>
+	</select>
+	<delete id="deleteUserRoleByKey" parameterType="com.mvn.system.model.UserRoleInfo">
+		delete from user_role_info
+		<include refid="SqlWhere"></include>
+	</delete>
+	<insert id="insertUserRoleInfo" parameterType="com.mvn.system.model.UserRoleInfo">
+		insert into user_role_info (id, roleId, userId, createTime, updateTime, state)
+		values (#{id,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT})
+	</insert>
+	<update id="updateByUserRole" parameterType="com.mvn.system.model.UserRoleInfo">
+		update user_role_info
+		<set>
+			<if test="roleid != null">
+				roleId = #{roleid,jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null">
+				userId = #{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatetime != null">
+				updateTime = #{updatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

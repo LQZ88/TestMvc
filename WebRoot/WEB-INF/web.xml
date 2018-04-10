@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>TestMvc</display-name>
+	<servlet>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/config/mvc-config/mvc*.xml</param-value>
+			<!-- <param-value>/WEB-INF/classes/config/mvc-config/mvc*.xml</param-value> -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/config/spring-config/bean*.xml</param-value>
+		<!-- <param-value>/WEB-INF/classes/config/spring-config/bean*.xml</param-value> -->
+	</context-param>
+	<!-- 初始化Servlet -->
+	<!-- <servlet>
+		<servlet-name>SystemInitServlet</servlet-name>
+		<servlet-class>com.mvn.utils.SystemInitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet> -->
+	<!-- 初始化Servlet end -->
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>Spring character encoding filter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Spring character encoding filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>SpecialCharaFilter</filter-name>
+		<filter-class>com.mvn.utils.SpecialCharaFilter</filter-class>
+	</filter>
+	<!-- 编码过滤器end -->
+	<!-- 登陆过滤器 -->
+	<filter>
+		<filter-name>LoginValidityCheck</filter-name>
+		<filter-class>com.mvn.system.filter.LoginValidityCheck</filter-class>
+		<init-param>
+			<param-name>freePages</param-name>
+			<param-value>
+				/TestMvc;/view/loginPage.jsp;/resources/common.jsp;/TestMvc/userLoginController/getLoginUserInfo.do
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>toPage</param-name>
+			<param-value>/view/loginPage.jsp</param-value>
+		</init-param>
+	</filter>
+	<!-- 过滤器的匹配 -->
+	<filter-mapping>
+		<filter-name>LoginValidityCheck</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<!-- 过滤器的匹配 -->
+	<filter-mapping>
+		<filter-name>LoginValidityCheck</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<!-- 登陆过滤器end -->
+	<!-- 在线用户监听器 -->
+	<listener>
+		<listener-class>com.mvn.system.filter.OnLineUserListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.mvn.system.filter.OnlineUserSessionDestroyed</listener-class>
+	</listener>
+	<!-- 在线用户监听器 end -->
+	<!-- session超时设置 -->
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
+	<!-- session超时设置end -->
+	<!-- 去除debug 日志null错误 -->
+	<context-param>  
+	    <param-name>spring.profiles.active</param-name>
+	    <param-value>dev</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>spring.profiles.default</param-name>
+	    <param-value>dev</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>spring.liveBeansView.mbeanDomain</param-name>  
+	    <param-value>dev</param-value>
+	</context-param>
+	<!-- 去除debug 日志null错误end -->
+	<!-- jsp的相关配置 自定义的标签库 -->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://www.xrh.com/jsp/jstl</taglib-uri>
+			<taglib-location>/tld/my.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	<!-- 欢迎页面 -->
+	<welcome-file-list>
+		<welcome-file>/view/loginPage.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

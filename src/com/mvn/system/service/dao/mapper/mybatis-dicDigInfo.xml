@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvn.system.service.dao.DicDigInfoMapper">
+	<resultMap id="DicDigInfoMap" type="com.mvn.system.model.DicDigInfo">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="TYPE" jdbcType="VARCHAR" property="type" />
+		<result column="DIC_CODE" jdbcType="VARCHAR" property="dicCode" />
+		<result column="VALUE" jdbcType="VARCHAR" property="value" />
+		<result column="SYS_DEFAULT" jdbcType="VARCHAR" property="sysDefault" />
+		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+		<result column="SORT_NO" jdbcType="INTEGER" property="sortNo" />
+		<result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+		<result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="state" jdbcType="BIT" property="state" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, NAME, TYPE, DIC_CODE, VALUE, SYS_DEFAULT, DESCRIPTION, SORT_NO,
+		CREATE_USER,
+		UPDATE_USER, CREATE_TIME, UPDATE_TIME, state
+	</sql>
+	<!-- <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="DicDigInfoMap"> 
+		select <include refid="Base_Column_List" /> from dic_dig_info where ID = 
+		#{id,jdbcType=INTEGER} </select> -->
+	<resultMap id="dicResultMap" type="com.mvn.system.model.DicDigInfo">
+		<result column="DIC_CODE" jdbcType="VARCHAR" property="dicCode" />
+		<result column="VALUE" jdbcType="VARCHAR" property="value" />
+	</resultMap>
+	<select id="findDicdigByTypeAlias" parameterType="java.lang.String" resultMap="dicResultMap">
+		SELECT DIC_CODE,VALUE FROM dic_dig_info
+		WHERE TYPE = #{type,jdbcType=VARCHAR} AND state=1 ORDER BY SORT_NO
+	</select>
+	 <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dic_dig_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mvn.system.model.DicDigInfo">
+    insert into dic_dig_info (ID, NAME, TYPE, 
+      DIC_CODE, VALUE, SYS_DEFAULT, 
+      DESCRIPTION, SORT_NO, CREATE_USER, 
+      UPDATE_USER, CREATE_TIME, UPDATE_TIME, 
+      state)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{dicCode,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{sysDefault,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{sortNo,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, 
+      #{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mvn.system.model.DicDigInfo">
+    update dic_dig_info
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="dicCode != null">
+        DIC_CODE = #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        VALUE = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDefault != null">
+        SYS_DEFAULT = #{sysDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        SORT_NO = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+	-->
+</mapper>

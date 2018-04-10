@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvn.system.service.dao.TreeInfoMapper">
+	<!-- 菜单信息获取 -->
+	<resultMap id="treeMap" type="com.mvn.system.model.TreeModel">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="URL" jdbcType="VARCHAR" property="url" />
+		<result column="TARGET" jdbcType="VARCHAR" property="target" />
+		<result column="PAR_ID" jdbcType="INTEGER" property="parentId" />
+		<result column="ICON" jdbcType="VARCHAR" property="icon" />
+	</resultMap>
+
+	<sql id="treeList">
+		ID, NAME, URL, TARGET, PAR_ID, ICON
+	</sql>
+	<!-- 开发环境获取所有菜单资源 -->
+	<select id="getAllDicInfo" resultMap="treeMap">
+		SELECT t1.* FROM dic_info t1
+		WHERE t1.TYPE = 'SYS_RES_1' AND t1.ISAVALIABLE = '1'
+		ORDER BY t1.ORDER_NO ASC
+	</select>
+	<!-- 正式环境获取用户的菜单资源 -->
+	<select id="getUserDicInfo" parameterType="java.lang.String" resultMap="treeMap">
+		SELECT DISTINCT t1.* FROM dic_info t1
+		JOIN dic_role_info t2 ON t2.dicId = t1.ID
+		JOIN user_role_info t3 ON t3.roleId = t2.roleId
+		JOIN role_info t4 on t3.roleId=t4.id
+		JOIN user_info t5 ON t5.id=t3.userId
+		WHERE t1.TYPE='SYS_RES_1' 
+		AND t1.ISAVALIABLE='1'
+		AND t4.state='1'
+		AND t5.ID= #{id,jdbcType=INTEGER}
+		ORDER BY t1.ORDER_NO ASC
+	</select>
+</mapper>

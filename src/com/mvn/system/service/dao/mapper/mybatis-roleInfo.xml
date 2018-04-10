@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvn.system.service.dao.RoleInfoMapper">
+	<!-- 角色管理  -->
+	<resultMap id="RoleInfoMap" type="com.mvn.system.model.RoleInfo">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="roleName" jdbcType="VARCHAR" property="rolename" />
+		<result column="roleNote" jdbcType="VARCHAR" property="rolenote" />
+		<result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+		<result column="state" jdbcType="BIT" property="state" />
+	</resultMap>
+	<sql id="RoleInfoList">
+		id, roleName, roleNote, createTime, state
+	</sql>
+	<sql id="sqlWhere">
+		<where>
+			<if test="id !=null and id !=''">
+				and id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="rolename !=null and rolename !=''">
+				and roleName like CONCAT('%',#{rolename,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="state !=null and state !=''">
+				and state = #{state,jdbcType=BIT}
+			</if>
+		</where>
+	</sql>
+	<select id="selectRoleInfoByList" parameterType="com.mvn.system.model.RoleInfo" resultMap="RoleInfoMap">
+		select * from role_info
+		<include refid="sqlWhere"></include>
+	</select>
+	<select id="selectRoleInfoByCount" parameterType="com.mvn.system.model.RoleInfo" resultType="java.lang.Integer">
+		select count(*) from role_info
+		<include refid="sqlWhere"></include>
+	</select>
+	<select id="selectRoleInfoByInfo" parameterType="com.mvn.system.model.RoleInfo" resultMap="RoleInfoMap">
+		select * from role_info
+		<include refid="sqlWhere"></include>
+	</select>
+	<insert id="insertRoleInfo" parameterType="com.mvn.system.model.RoleInfo">
+		insert into role_info (id, roleName, roleNote, createTime, state)
+		values (#{id,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR},
+		#{rolenote,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT})
+	</insert>
+	<update id="updateRoleInfo" parameterType="com.mvn.system.model.RoleInfo">
+		update role_info
+		<set>
+			<if test="rolename != null">
+				roleName = #{rolename,jdbcType=VARCHAR},
+			</if>
+			<if test="rolenote != null">
+				roleNote = #{rolenote,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	
+	
+	<!-- 角色资源管理  -->
+	<resultMap id="DicRoleInfoMap" type="com.mvn.system.model.DicRoleInfo">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="roleId" jdbcType="VARCHAR" property="roleid" />
+		<result column="dicId" jdbcType="VARCHAR" property="dicid" />
+	</resultMap>
+	<select id="selectDicRoleInfo" parameterType="com.mvn.system.model.DicRoleInfo" resultMap="DicRoleInfoMap">
+	    select * from dic_role_info where roleId = #{roleid,jdbcType=VARCHAR}
+  	</select>
+	<delete id="deleteDicRoleInfoByKey" parameterType="com.mvn.system.model.DicRoleInfo">
+	    delete from dic_role_info where roleId = #{roleid,jdbcType=VARCHAR}
+  	</delete>
+	<insert id="insertDicRoleInfo" parameterType="com.mvn.system.model.DicRoleInfo">
+		insert into dic_role_info (id, roleId, dicId, createTime, updateTime)
+		values (#{id,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR},
+		#{dicid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="updateByDicRoleInfo" parameterType="com.mvn.system.model.DicRoleInfo">
+		update dic_role_info
+		<set>
+			<if test="roleid != null">
+				roleId = #{roleid,jdbcType=VARCHAR},
+			</if>
+			<if test="dicid != null">
+				dicId = #{dicid,jdbcType=VARCHAR},
+			</if>
+			<if test="updatetime != null">
+				updateTime = #{updatetime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

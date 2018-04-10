@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     					http://www.springframework.org/schema/aop
+     					http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+     					http://www.springframework.org/schema/context
+     					http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     					http://www.springframework.org/schema/tx
+     					http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     					http://www.springframework.org/schema/cache
+     					http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+	<!-- 配置自动扫描包 -->
+	<context:component-scan base-package="com.mvn.*" />
+	<!-- 配置数据源 -->
+	<context:property-placeholder location="classpath:database.properties" />
+	<!-- 数据库连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 配置连接池属性 -->
+        <property name="driverClass" value="${driverClass}" />
+        <property name="jdbcUrl" value="${url}" />
+        <property name="user" value="${username}" />
+        <property name="password" value="${password}" />
+        <!-- c3p0连接池的私有属性 -->
+        <property name="maxPoolSize" value="${maxActive}" />
+        <property name="minPoolSize" value="${minActive}" />
+        <!-- 关闭连接后不自动commit -->
+        <property name="autoCommitOnClose" value="false" />
+        <!-- 获取连接超时时间 -->
+        <property name="checkoutTimeout" value="${maxWait}" />
+        <!-- 当获取连接失败重试次数 -->
+        <property name="acquireRetryAttempts" value="2" />
+    </bean>
+	<!-- 创建sessionFactory对象 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:config/mybatis-config/sql-map-config.xml" />
+		<!--mybatis分页配置  -->
+		<property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties" >
+                        <value>
+                            dialect=mysql
+                            offsetAsPageNum=true
+                            rowBoundsWithCount=true
+                            pageSizeZero=truereasonable=false
+                            reasonable=true
+                            params=pageNum=pageHelperStart;pageSize=pageHelperRows;
+                            supportMethodsArguments=false
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property> 
+	</bean>
+	<!-- 由Spring自动把mybaties的sqlSeesionFactory 注入到dao层 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="com.mvn.system.service.dao,com.mvn.home.service.dao" />
+        <property name="annotationClass" value="com.mvn.utils.MyBatisRepository" />
+    </bean>
+	<!-- 开启事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 开启事物管理器自动注入 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+	<!-- 配置切面 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<!-- <tx:method name="*" propagation="REQUIRED" /> -->
+		</tx:attributes>
+	</tx:advice>
+	<!-- Spring配置Service层的事物切面 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut expression="execution(* com.mvn.*.service*.*.*(..))"	id="cut" />
+		<!-- 指定切入点中所有的方法,均采用txAdivce定义的方法事务 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="cut" />
+	</aop:config> 
+	<!-- spring 文件上传配置 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>1048576000</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+	<!-- 密码转换定义 -->
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+</beans>

@@ -1,0 +1,94 @@
+@CHARSET "UTF-8";
+.systop {
+	height: 95px;
+	background-image: url(../images/systop.png);
+	width: 100%;
+}
+.sysname{
+	height:85px;
+	width:300px;
+	min-width:30%;
+	display:inline-block;
+	margin-left:30px;
+	margin-top:10px;
+	overflow:visible;
+}
+.sysname span{
+	font-size:18px;
+	color:#fff;
+	line-height:72px;
+	font-weight:bold;
+	float:left;
+	margin-left:10px;
+}
+.syslogo{
+	display:block;
+	float:left;
+}
+.sysinfo {
+	top:0px;
+	width: 69%;
+	height: 95px;
+	float: left;
+	position: fixed;
+	margin-left:75%;
+	min-width: 1000px;
+}
+.sysd {
+	width: 88px;
+	height: 95px;
+	float: left;
+	position: relative;
+	margin-left: 0.5%;
+	cursor: pointer;
+}
+.sysd img {
+	width: 88px;
+	margin-left: 15px;
+	margin-top: 10px;
+	max-width: 60px;
+	min-width: 30px;
+}
+
+.sysd p {
+	color: #333;
+	font-size: 12px;
+	text-align: center;
+	margin-top: -6px;
+	font-weight: bold;
+}
+.sysinfo a.sysd:hover {
+	background-image: url(../images/sysdays.png);
+}
+
+.sysinfo a.sysd:active {
+	background-image: url(../images/sysdn.png);
+}
+
+.sysinfo a.sysd:focus {
+	background-image: url(../images/sysdn.png);
+}
+
+.sysinfo a.sysd p:hover {
+	color: #000000;
+}
+.commtop {
+	height: 25px;
+	width: 100%;
+	vertical-align: middle;
+	background-image: url(../images/commtop.png);
+	background-repeat: repeat-x;
+}
+.userdata {
+	font-size: 14px;
+	color: #FFFFFF;
+	margin-left: 20px;
+	line-height: 25px;
+}
+.nowtime {
+	float: right;
+	color: #FFFFFF;
+	font-size: 14px;
+	line-height: 25px;
+	margin-right: 50px;
+}

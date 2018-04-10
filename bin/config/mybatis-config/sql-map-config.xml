@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 默认值false -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 以前版本为true -->
+		<!-- 3.4.1及以后版本默认为false 类似hibernate超级延迟加载 不要不给,要了看要什么给加载什么 -->
+		<setting name="aggressiveLazyLoading" value="true" />
+	</settings>
+	<typeAliases>
+		<package name="com.mvn.home.model" />
+		<package name="com.mvn.system.model" />
+	</typeAliases>
+	<!-- sql 映射文件配置 -->
+	<mappers>
+		<mapper resource="com/mvn/system/service/dao/mapper/mybatis-userinfo.xml" />
+		<mapper resource="com/mvn/system/service/dao/mapper/mybatis-roleInfo.xml" />
+		<mapper resource="com/mvn/system/service/dao/mapper/mybatis-mainTree.xml" />
+		<mapper resource="com/mvn/system/service/dao/mapper/mybatis-dicInfo.xml" />
+		<mapper resource="com/mvn/system/service/dao/mapper/mybatis-dicDigInfo.xml" />
+		<mapper resource="com/mvn/system/service/dao/mapper/mybatis-fileInfo.xml" />
+		
+		
+		
+	</mappers>
+</configuration>
+

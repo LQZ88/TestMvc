@@ -15,6 +15,7 @@ public class OnlineUserSessionDestroyed implements HttpSessionListener {
      * 
      * @param event
      */
+    @Override
     public void sessionCreated(HttpSessionEvent event) {
 
     }
@@ -23,6 +24,7 @@ public class OnlineUserSessionDestroyed implements HttpSessionListener {
      * 
      * @param event
      */
+    @Override
     public void sessionDestroyed(HttpSessionEvent event) {
         UserInfo outUser = (UserInfo) event.getSession().getAttribute("userInfo");
         if (null != outUser) {

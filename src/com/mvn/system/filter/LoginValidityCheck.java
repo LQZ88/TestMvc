@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.google.gson.JsonObject;
 import com.mvn.system.model.UserInfo;
+import com.mvn.utils.CommUtils;
 import com.mvn.utils.JSONUtil;
 import com.mvn.utils.PropertiesUtil;
 
@@ -29,10 +30,10 @@ public class LoginValidityCheck implements Filter {
     private boolean isOtherLogin = false;
     private String[] freePages;//过滤访问
     private String toPage;//没有登陆返回
-
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String isLogin = PropertiesUtil.getPropertyValues("isLogin");//获取配置的是否 只能在一个地方登陆
-        isSingleLogin = isLogin.equals("0")?false:true;//将字符转换为boolean类型
+        isSingleLogin = "0".equals(isLogin)?false:true;//将字符转换为boolean类型
         this.filterConfig = filterConfig;
         String strPages = null;
         StringTokenizer strTokenizer = null;
@@ -53,11 +54,11 @@ public class LoginValidityCheck implements Filter {
             return;
         }
     }
-
+    @Override
     public void destroy() {
         this.filterConfig = null;
     }
-
+    @Override
     public void doFilter(ServletRequest sRequest, ServletResponse sResponse,
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) sRequest;
@@ -79,7 +80,7 @@ public class LoginValidityCheck implements Filter {
                     jo.addProperty("rows", "");
                     jo.addProperty("total", 0);
                     JSONUtil.writeResult(response, jo);
-                } else if (strRequestURI.indexOf(".jsp") != -1 ||strRequestURI.indexOf(".do")!=-1) {
+                } else if (strRequestURI.indexOf(CommUtils.strType[1]) != -1 ||strRequestURI.indexOf(CommUtils.strType[0])!=-1) {
                     doFilter = false;
                     StringBuffer outString = new StringBuffer();
                     outString.append("<script type=\"text/javascript\">");

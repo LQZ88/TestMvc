@@ -127,9 +127,9 @@ public class UserInfoController extends MultiActionController {
 				model.setEmil(emil);
 			}
 			String address = request.getParameter("address");
-			if (OtherUtil.measureNotNull(address))
+			if (OtherUtil.measureNotNull(address)){
 				model.setAddress(address);
-			String state = request.getParameter("state");
+			}String state = request.getParameter("state");
 			if (OtherUtil.measureNotNull(state)) {
 				model.setState(OtherUtil.isBoolean(state));
 				bean.setState(OtherUtil.isBoolean(state));
@@ -153,14 +153,17 @@ public class UserInfoController extends MultiActionController {
 			model.setCreatetime(new Date());
 			bean.setCreatetime(new Date());
 			bean.setId(UUIDGenerator.getUUID());
-			userInfoService.saveUserInfoData(model);//添加用户信息
-			userInfoService.saveLoginUserInfoData(bean);//添加用户登录信息
-			if(OtherUtil.measureNotNull(fileid)){//
+			//添加用户信息
+			userInfoService.saveUserInfoData(model);
+			//添加用户登录信息
+			userInfoService.saveLoginUserInfoData(bean);
+			if(OtherUtil.measureNotNull(fileid)){
 				String filetext = request.getParameter("filetext");
 				fileInfo.setId(UUIDGenerator.getUUID());
 				fileInfo.setFileid(userId);
 				fileInfo.setFiletext(filetext.getBytes("UTF8"));
-				fileInfoService.saveFileInfo(fileInfo);//保存头像信息
+				//保存头像信息
+				fileInfoService.saveFileInfo(fileInfo);
 			}
 			JSONUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
@@ -204,25 +207,42 @@ public class UserInfoController extends MultiActionController {
 		try {
 			UserInfo model = new UserInfo();
 			String username = request.getParameter("username");
-			if(OtherUtil.measureNotNull(username))model.setUsername(username);
+			if(OtherUtil.measureNotNull(username)){
+				model.setUsername(username);
+			}
 			String sex = request.getParameter("sex");
-			if(OtherUtil.measureNotNull(sex))model.setSex(sex);
+			if(OtherUtil.measureNotNull(sex)){
+				model.setSex(sex);
+			}
 			String age = request.getParameter("age");
-			if(OtherUtil.measureNotNull(age))model.setAge(Integer.parseInt(age));
+			if(OtherUtil.measureNotNull(age)){
+				model.setAge(Integer.parseInt(age));
+			}
 			String birthday = request.getParameter("birthday");
-			if(OtherUtil.measureNotNull(birthday))model.setBirthday(DateUtils.convertStrToDate(birthday));
+			if(OtherUtil.measureNotNull(birthday)){
+				model.setBirthday(DateUtils.convertStrToDate(birthday));
+			}
 			String phone = request.getParameter("phone");
-			if(OtherUtil.measureNotNull(phone))model.setPhone(phone);
+			if(OtherUtil.measureNotNull(phone)){
+				model.setPhone(phone);
+			}
 			String telephone = request.getParameter("telephone");
-			if(OtherUtil.measureNotNull(telephone))model.setTelephone(telephone);
+			if(OtherUtil.measureNotNull(telephone)){
+				model.setTelephone(telephone);
+			}
 			String emil = request.getParameter("emil");
-			if(OtherUtil.measureNotNull(emil))model.setEmil(emil);
+			if(OtherUtil.measureNotNull(emil)){
+				model.setEmil(emil);
+			}
 			String address = request.getParameter("address");
-			if(OtherUtil.measureNotNull(address))model.setAddress(address);
+			if(OtherUtil.measureNotNull(address)){
+				model.setAddress(address);
+			}
 			String userId = request.getParameter("userId");
 			if(OtherUtil.measureNotNull(userId)){
 				model.setId(userId);
-				userInfoService.editUserInfoData(model);//添加用户信息
+				//添加用户信息
+				userInfoService.editUserInfoData(model);
 			}
 			JSONUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
@@ -291,19 +311,22 @@ public class UserInfoController extends MultiActionController {
 		ModelAndView mav = new ModelAndView("/view/system/user/userRoleInfoEdit");
 		List<RoleInfo> list = new ArrayList<RoleInfo>();
 		try {
-			String userId = request.getParameter("userId");//获的用户id
+			//获的用户id
+			String userId = request.getParameter("userId");
 			RoleInfo model = new RoleInfo();
 			model.setState(true);
-			list = roleInfoService.selectRoleInfoByList(model);//获取所有的角色信息
+			//获取所有的角色信息
+			list = roleInfoService.selectRoleInfoByList(model);
 			if(OtherUtil.measureNotNull(userId)){
 				UserRoleInfo bean = new UserRoleInfo();
 				bean.setUserid(userId);
-				List<UserRoleInfo> URlist = userInfoService.selectByUserRoleInfo(bean);//获取用户角色信息
-				for(UserRoleInfo roleuserinfo : URlist){
+				//获取用户角色信息
+				List<UserRoleInfo> roleInfos = userInfoService.selectByUserRoleInfo(bean);
+				for(UserRoleInfo roleuserinfo : roleInfos){
 					String roleId = roleuserinfo.getRoleid();
 					for(RoleInfo info : list){
-						String RoleId = info.getId();
-						if(RoleId.equals(roleId)){
+						String id = info.getId();
+						if(id.equals(roleId)){
 							info.setIsCheck(true);
 						}
 					}
@@ -324,19 +347,23 @@ public class UserInfoController extends MultiActionController {
 	@RequestMapping("/editRoleInfoDatas.do")
     public void editRoleInfoDatas(HttpServletRequest request, HttpServletResponse response){
 		try {
-			String userId = request.getParameter("userId");//得到用户id
-			String[] roleIds = request.getParameterValues("roleId");//得到选中的角色id
+			//得到用户id
+			String userId = request.getParameter("userId");
+			//得到选中的角色id
+			String[] roleIds = request.getParameterValues("roleId");
 			if(OtherUtil.measureNotNull(userId)){
 				UserRoleInfo bean = new UserRoleInfo();
 				bean.setUserid(userId);
-				userInfoService.deleteUserRoleByKey(bean);//根据用户id删除原来的分配角色
+				//根据用户id删除原来的分配角色
+				userInfoService.deleteUserRoleByKey(bean);
 				if(OtherUtil.measureNotNull(roleIds)){
 					bean.setId(UUIDGenerator.getUUID());
 					bean.setCreatetime(new Date());
 					bean.setState(true);
 					for(String roleId : roleIds){
 						bean.setRoleid(roleId);
-						userInfoService.insertUserRoleInfo(bean);//重新添加分配角色信息
+						//重新添加分配角色信息
+						userInfoService.insertUserRoleInfo(bean);
 						bean.setId(UUIDGenerator.getUUID());
 					}
 				}

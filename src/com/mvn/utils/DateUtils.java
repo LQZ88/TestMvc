@@ -20,7 +20,7 @@ public class DateUtils {
 		if (null == dateStr || "".equals(dateStr.trim())) {
 			return null;
 		}
-		if (dateStr.length() > 10) {
+		if (dateStr.length() > (CommUtils.intNumber[1]+CommUtils.intNumber[9])) {
 			throw new java.lang.IllegalArgumentException("字符串格式错误(yyyy-MM-dd)" + dateStr);
 		}
 		try {

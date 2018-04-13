@@ -168,8 +168,9 @@ public class JSONUtil {
      * @return
      */
     public static String string2json(String s) {
-        if (s == null)
+        if (s == null){
             return "";
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
@@ -202,7 +203,7 @@ public class JSONUtil {
                 if (ch >= '\u0000' && ch <= '\u001F') {
                     String ss = Integer.toHexString(ch);
                     sb.append("\\u");
-                    for (int k = 0; k < 4 - ss.length(); k++) {
+                    for (int k = 0; k < CommUtils.intNumber[4] - ss.length(); k++) {
                         sb.append('0');
                     }
                     sb.append(ss.toUpperCase());
@@ -341,10 +342,11 @@ public class JSONUtil {
         org.json.JSONArray datas = new org.json.JSONArray();
         try {
             Field.setAccessible(fields, true);
-            if (list != null)
+            if (list != null){
                 for (T bean : list) {
                     datas.put(beanToJSON(bean, classT));
                 }
+            }
         } catch (Exception e) {
         	log.error(e);
             e.printStackTrace();

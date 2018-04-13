@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.mvn.system.model.UserInfo;
+import com.mvn.utils.CommUtils;
 
 public class OnLineUserListener implements HttpSessionAttributeListener {
     public static Map<String, UserInfo> onLineUserMap = new HashMap<String, UserInfo>();// 在线用户map
@@ -22,10 +23,11 @@ public class OnLineUserListener implements HttpSessionAttributeListener {
      * 
      * @param event
      */
+    @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
         String attributeName = event.getName();
         HttpSession session = event.getSession();
-        if ("userInfo".equals(attributeName)) {// 添加在线用户
+        if (CommUtils.userInfo.equals(attributeName)) {// 添加在线用户
         	UserInfo loginUser = (UserInfo) session.getAttribute("userInfo");
             if (null != loginUser) {
                 onLineUserMap.put(loginUser.getId(), loginUser);
@@ -62,9 +64,10 @@ public class OnLineUserListener implements HttpSessionAttributeListener {
      * 
      * @param event
      */
+    @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
         String attributeName = event.getName();
-        if ("userInfo".equals(attributeName)) {// 删除在线用户
+        if (CommUtils.userInfo.equals(attributeName)) {// 删除在线用户
         	UserInfo outUser = (UserInfo) event.getValue();
             onLineUserMap.remove(outUser.getId());
         }
@@ -76,10 +79,11 @@ public class OnLineUserListener implements HttpSessionAttributeListener {
      * 
      * @param event
      */
+    @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
         String attributeName = event.getName();
         HttpSession session = event.getSession();
-        if ("userInfo".equals(attributeName)) {// 添加在线用户
+        if (CommUtils.userInfo.equals(attributeName)) {// 添加在线用户
         	UserInfo loginUser = (UserInfo) session.getAttribute("userInfo");
             if (null != loginUser) {
                 onLineUserMap.put(loginUser.getId(), loginUser);

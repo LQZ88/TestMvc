@@ -54,6 +54,7 @@ public class OtherUtil {
         nf.setMaximumFractionDigits(2);
         return nf.format(o);
     }
+    private final static Pattern pt=Pattern.compile("\\|", Pattern.CASE_INSENSITIVE);
     /**
      * 判断“|”在字符串中出现个数
      * @param str内容
@@ -61,10 +62,10 @@ public class OtherUtil {
      */
     public static int numCharString(String str) {
         int num = 0;
-        Pattern pt = Pattern.compile("\\|", Pattern.CASE_INSENSITIVE);
         Matcher mc = pt.matcher(str);
-        while (mc.find())
+        while (mc.find()){
             num++;
+        }
         return num;
     }
     /**
@@ -88,7 +89,7 @@ public class OtherUtil {
     }
     public static Boolean isBoolean(String str){
     	boolean flag = false;
-    	if(str.contains("1")||str.equals("1")){
+    	if(str.contains(CommUtils.strNumber[1])||CommUtils.strNumber[1].equals(str)){
     		flag = true;
     	}
     	return flag;

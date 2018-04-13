@@ -14,6 +14,7 @@ public class SystemInitServlet extends HttpServlet {
 	/**
 	 * Destruction of the servlet.
 	 */
+	@Override
 	public void destroy() {
 		super.destroy();
 	}
@@ -22,6 +23,7 @@ public class SystemInitServlet extends HttpServlet {
 	 * Initialization of the servlet. 
 	 * @throws ServletException
 	 */
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
 		if (SystemInitServlet.context == null) {

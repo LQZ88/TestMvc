@@ -20,6 +20,7 @@ import com.mvn.system.model.DicDigInfo;
 import com.mvn.system.model.DicInfo;
 import com.mvn.system.service.DicDigInfoService;
 import com.mvn.system.service.DicInfoService;
+import com.mvn.utils.CommUtils;
 import com.mvn.utils.JSONUtil;
 import com.mvn.utils.OtherUtil;
 
@@ -145,9 +146,9 @@ public class DicInfoController extends MultiActionController {
         String oper = request.getParameter("oper");
         try {
             if (OtherUtil.measureNotNull(oper)) {
-                if (oper.equals("save")) {
+                if (CommUtils.isSave.equals(oper)) {
                 	dicInfoService.saveDicInfo(dicInfo);
-                } else if (oper.equals("update")) {
+                } else if (CommUtils.isUpdate.equals(oper)) {
                 	dicInfoService.updateDicInfo(dicInfo);
                     return;
                 }

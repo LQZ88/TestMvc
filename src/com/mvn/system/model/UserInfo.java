@@ -32,10 +32,11 @@ public class UserInfo extends UserLoginInfo {
     private long loginTime;
     
     private String loginId;
+    @Override
     public String getId() {
         return id;
     }
-
+    @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
@@ -43,7 +44,7 @@ public class UserInfo extends UserLoginInfo {
     public String getUsername() {
         return username;
     }
-
+    
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
     }
@@ -111,19 +112,19 @@ public class UserInfo extends UserLoginInfo {
     public void setFileid(String fileid) {
         this.fileid = fileid == null ? null : fileid.trim();
     }
-
+    @Override
     public Boolean getState() {
         return state;
     }
-
+    @Override
     public void setState(Boolean state) {
         this.state = state;
     }
-
+    @Override
     public Date getCreatetime() {
         return createtime;
     }
-
+    @Override
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }

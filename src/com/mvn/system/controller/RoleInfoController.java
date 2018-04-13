@@ -99,8 +99,8 @@ public class RoleInfoController extends MultiActionController {
 				bean.setCreatetime(new Date());
 				roleInfoService.deleteDicRoleInfoByKey(bean);
 				String[] dicId = dicIds.split(",");
-				for(String Id : dicId){
-					bean.setDicid(Id);
+				for(String dicid : dicId){
+					bean.setDicid(dicid);
 					roleInfoService.insertDicRoleInfo(bean);
 					bean.setId(UUIDGenerator.getUUID());
 				}
@@ -185,8 +185,8 @@ public class RoleInfoController extends MultiActionController {
 				bean.setCreatetime(new Date());
 				roleInfoService.deleteDicRoleInfoByKey(bean);
 				String[] dicId = dicIds.split(",");
-				for(String Id : dicId){
-					bean.setDicid(Id);
+				for(String dicid : dicId){
+					bean.setDicid(dicid);
 					roleInfoService.insertDicRoleInfo(bean);
 					bean.setId(UUIDGenerator.getUUID());
 				}

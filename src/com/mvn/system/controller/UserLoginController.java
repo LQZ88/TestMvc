@@ -22,6 +22,7 @@ import com.mvn.system.model.UserInfo;
 import com.mvn.system.model.UserLoginInfo;
 import com.mvn.system.service.TreeInfoService;
 import com.mvn.system.service.UserInfoService;
+import com.mvn.utils.CommUtils;
 import com.mvn.utils.JSONUtil;
 import com.mvn.utils.MyPassUtils;
 import com.mvn.utils.PropertiesUtil;
@@ -59,7 +60,8 @@ public class UserLoginController extends MultiActionController {
 		    		String isLogin = request.getParameter("isLogin");
 		    		// 设置登录用户是否存在
 		            boolean isExist = false;
-		            if ("0".equals(isLogin)) {// 判断用户是否存在
+		            // 判断用户是否存在
+		            if (CommUtils.strNumber[0].equals(isLogin)) {
 		            	UserInfo userExist = OnLineUserListener.onLineUserMap.get(usermodel.getUserid());
 		                if (null != userExist) {
 		                	msg=2;// 已有用户
@@ -69,7 +71,7 @@ public class UserLoginController extends MultiActionController {
 		            if (!isExist) {
 		            	UserInfo bean = new UserInfo();bean.setId(usermodel.getUserid());
 		            	UserInfo userInfo = userInfoService.getUserInfo(bean);
-		            	userInfo.setLoginTime(new Date().getTime());
+		            	userInfo.setLoginTime(System.currentTimeMillis());
 		            	//设置session
 		            	request.getSession().setAttribute("ISLOGIN_KEY", "LOGIN");
 		            	request.getSession().setAttribute("userInfo", userInfo);
@@ -92,7 +94,7 @@ public class UserLoginController extends MultiActionController {
     public String setLoginUserOut(HttpServletRequest request,
             HttpServletResponse response) {
         HttpSession session = request.getSession();
-        if (session.getAttribute("userInfo") != null) {
+        if (session.getAttribute(CommUtils.userInfo) != null) {
         	UserInfo loginUser = (UserInfo) session.getAttribute("userInfo");
             session.setAttribute("loginTime", loginUser.getLoginTime());
             session.setAttribute("removeUserId", loginUser.getId());

@@ -7,7 +7,11 @@ import com.mvn.system.model.UserInfo;
 import com.mvn.system.model.UserLoginInfo;
 import com.mvn.system.model.UserRoleInfo;
 import com.mvn.utils.MyBatisRepository;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 @MyBatisRepository
 public interface UserInfoMapper {
 	/**
@@ -24,10 +28,10 @@ public interface UserInfoMapper {
 	
 	/**
 	 * 获取登陆信息
-	 * @param LoginName
+	 * @param loginName
 	 * @return
 	 */
-	public UserLoginInfo getLoginUserInfo(String LoginName);
+	public UserLoginInfo getLoginUserInfo(String loginName);
 	public void saveLoginUserInfoData(UserLoginInfo model);
 	public void editLoginUserInfoData(UserLoginInfo model);
 	

@@ -6,7 +6,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.mvn.system.model.UserInfo;
-
+/***
+ * 
+ * @author Admin
+ *
+ */
 public class OnlineUserSessionDestroyed implements HttpSessionListener {
     protected static final Log logger = LogFactory.getLog(OnlineUserSessionDestroyed.class);
 

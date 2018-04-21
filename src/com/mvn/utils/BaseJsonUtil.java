@@ -21,9 +21,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-
-public class JSONUtil {
-    private static Log log = LogFactory.getLog(JSONUtil.class);
+/**
+ * 
+ * @author Admin
+ *
+ */
+public class BaseJsonUtil {
+    private static Log log = LogFactory.getLog(BaseJsonUtil.class);
     /**
      * 将Object包含 \ \ 格式的内容转为JSON类型的String
      * @param obj
@@ -203,7 +207,7 @@ public class JSONUtil {
                 if (ch >= '\u0000' && ch <= '\u001F') {
                     String ss = Integer.toHexString(ch);
                     sb.append("\\u");
-                    for (int k = 0; k < CommUtils.intNumber[4] - ss.length(); k++) {
+                    for (int k = 0; k < CommUtils.INT_UNMBER4 - ss.length(); k++) {
                         sb.append('0');
                     }
                     sb.append(ss.toUpperCase());
@@ -291,13 +295,13 @@ public class JSONUtil {
     /**
      * 返回JSONObject 格式内容
      * @param response
-     * @param json_obj 完整的JSONObject格式的内容
+     * @param jsonObj 完整的JSONObject格式的内容
      */
     public static void jsonObjectResult(HttpServletResponse response,
-            JSONObject json_obj) {
+            JSONObject jsonObj) {
         response.setCharacterEncoding("utf-8");
         try {
-            response.getWriter().write(json_obj.toString());
+            response.getWriter().write(jsonObj.toString());
         } catch (IOException e) {
             log.error(e);
             e.printStackTrace();
@@ -306,13 +310,13 @@ public class JSONUtil {
     /**
      * 返回JSONArray 格式内容
      * @param response
-     * @param json_arr
+     * @param jsonArr
      */
     public static void jsonArrayResult(HttpServletResponse response,
-            JSONArray json_arr) {
+            JSONArray jsonArr) {
         response.setCharacterEncoding("utf-8");
         try {
-            response.getWriter().write(json_arr.toString());
+            response.getWriter().write(jsonArr.toString());
         } catch (IOException e) {
             log.error(e);
             e.printStackTrace();
@@ -326,10 +330,10 @@ public class JSONUtil {
      */
     public static void strToJson(HttpServletResponse response, String str, Object obj) {
         response.setCharacterEncoding("utf-8");
-        JSONObject json_obj = new JSONObject();
-        json_obj.put(str, obj);
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put(str, obj);
         try {
-            response.getWriter().write(json_obj.toString());
+            response.getWriter().write(jsonObj.toString());
         } catch (IOException e) {
         	log.error(e);
             e.printStackTrace();
@@ -338,7 +342,7 @@ public class JSONUtil {
 
     public static <T> org.json.JSONArray listToJSON(List<T> list,
             Class<T> classT) {
-        Field fields[] = classT.getDeclaredFields();
+        Field[] fields = classT.getDeclaredFields();
         org.json.JSONArray datas = new org.json.JSONArray();
         try {
             Field.setAccessible(fields, true);
@@ -355,7 +359,7 @@ public class JSONUtil {
     }
 
     public static <T> JSONObject beanToJSON(T bean, Class<T> classT) {
-        Field fields[] = classT.getDeclaredFields();
+        Field[] fields = classT.getDeclaredFields();
         JSONObject o = new JSONObject();
         try {
             Field.setAccessible(fields, true);
@@ -376,7 +380,7 @@ public class JSONUtil {
      * @param response
      * @param obj
      */
-    public static void Print(HttpServletResponse response, Object obj) {
+    public static void printInfo(HttpServletResponse response, Object obj) {
 		response.setCharacterEncoding("utf-8");
 		try {
 			response.getWriter().print(obj);

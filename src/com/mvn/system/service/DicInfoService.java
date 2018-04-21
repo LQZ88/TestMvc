@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.mvn.system.model.DicInfo;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public interface DicInfoService {
 	/**
 	 * 添加菜单资源

@@ -1,7 +1,11 @@
 package com.mvn.utils;
 
 import java.util.UUID;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class UUIDGenerator {
 	/**
      * 描述： 生产单个UUID

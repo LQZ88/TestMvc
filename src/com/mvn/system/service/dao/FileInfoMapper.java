@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.mvn.system.model.FileInfo;
 import com.mvn.utils.MyBatisRepository;
+/***
+ * 
+ * @author Admin
+ *
+ */
 @MyBatisRepository
 public interface FileInfoMapper {
 	public List<FileInfo> getFileInfoList();

@@ -12,9 +12,14 @@ import org.apache.commons.logging.LogFactory;
 
 import com.mvn.system.model.UserInfo;
 import com.mvn.utils.CommUtils;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class OnLineUserListener implements HttpSessionAttributeListener {
-    public static Map<String, UserInfo> onLineUserMap = new HashMap<String, UserInfo>();// 在线用户map
+	/** 在线用户map*/
+    public static Map<String, UserInfo> onLineUserMap = new HashMap<String, UserInfo>();
     protected static final Log logger = LogFactory.getLog(OnLineUserListener.class);
 
     /**
@@ -27,13 +32,16 @@ public class OnLineUserListener implements HttpSessionAttributeListener {
     public void attributeAdded(HttpSessionBindingEvent event) {
         String attributeName = event.getName();
         HttpSession session = event.getSession();
-        if (CommUtils.userInfo.equals(attributeName)) {// 添加在线用户
+        // 添加在线用户
+        if (CommUtils.USERINFO.equals(attributeName)) {
         	UserInfo loginUser = (UserInfo) session.getAttribute("userInfo");
             if (null != loginUser) {
                 onLineUserMap.put(loginUser.getId(), loginUser);
             }
-        } else if ("removeUserId".equals(attributeName)) {// 删除在线用户
-            long loginTime = Long.parseLong(String.valueOf(session.getAttribute("loginTime")));// 退出用户的登录时间
+        // 删除在线用户
+        } else if (CommUtils.REMOVE_ID.equals(attributeName)) {
+        	// 退出用户的登录时间
+            long loginTime = Long.parseLong(String.valueOf(session.getAttribute("loginTime")));
             String removeUserId = (String) session.getAttribute("removeUserId");
             UserInfo outUser = onLineUserMap.get(removeUserId);
             if (loginTime == outUser.getLoginTime()) {
@@ -67,7 +75,8 @@ public class OnLineUserListener implements HttpSessionAttributeListener {
     @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
         String attributeName = event.getName();
-        if (CommUtils.userInfo.equals(attributeName)) {// 删除在线用户
+        // 删除在线用户
+        if (CommUtils.USERINFO.equals(attributeName)) {
         	UserInfo outUser = (UserInfo) event.getValue();
             onLineUserMap.remove(outUser.getId());
         }
@@ -83,8 +92,9 @@ public class OnLineUserListener implements HttpSessionAttributeListener {
     public void attributeReplaced(HttpSessionBindingEvent event) {
         String attributeName = event.getName();
         HttpSession session = event.getSession();
-        if (CommUtils.userInfo.equals(attributeName)) {// 添加在线用户
-        	UserInfo loginUser = (UserInfo) session.getAttribute("userInfo");
+        // 添加在线用户
+        if (CommUtils.USERINFO.equals(attributeName)) {
+        	UserInfo loginUser = (UserInfo) session.getAttribute(CommUtils.USERINFO);
             if (null != loginUser) {
                 onLineUserMap.put(loginUser.getId(), loginUser);
             }

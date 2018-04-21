@@ -3,11 +3,15 @@ package com.mvn.utils;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Random;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class NumberUtil {
 	public static Integer toInteger(Object obj) {
 		try {
-			return !StringUtils.isSpaceEmptys(obj) ? Integer.valueOf(obj.toString()) : null;
+			return !BaseStringUtils.isSpaceEmptys(obj) ? Integer.valueOf(obj.toString()) : null;
 		} catch (Exception arg1) {
 			return null;
 		}
@@ -15,7 +19,7 @@ public class NumberUtil {
 
 	public static BigDecimal toBigDecimal(Object obj) {
 		try {
-			if (!StringUtils.isSpaceEmptys(obj)) {
+			if (!BaseStringUtils.isSpaceEmptys(obj)) {
 				BigDecimal e = new BigDecimal(obj.toString());
 				return (new BigDecimal((new DecimalFormat("0.000")).format(e))).setScale(2, 1);
 			} else {
@@ -49,10 +53,6 @@ public class NumberUtil {
 
 	public static BigDecimal formatTwo(BigDecimal b1) {
 		return toBigDecimal(b1);
-	}
-
-	public static void main(String[] args) {
-		System.out.println(toBigDecimal(Double.valueOf(66.6D)));
 	}
 
 }

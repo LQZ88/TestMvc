@@ -1,5 +1,9 @@
 package com.mvn.system.model;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class FileInfo {
 	private String id;
 

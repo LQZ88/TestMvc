@@ -23,7 +23,7 @@ import com.mvn.system.model.UserLoginInfo;
 import com.mvn.system.service.TreeInfoService;
 import com.mvn.system.service.UserInfoService;
 import com.mvn.utils.CommUtils;
-import com.mvn.utils.JSONUtil;
+import com.mvn.utils.BaseJsonUtil;
 import com.mvn.utils.MyPassUtils;
 import com.mvn.utils.PropertiesUtil;
 
@@ -61,10 +61,11 @@ public class UserLoginController extends MultiActionController {
 		    		// 设置登录用户是否存在
 		            boolean isExist = false;
 		            // 判断用户是否存在
-		            if (CommUtils.strNumber[0].equals(isLogin)) {
+		            if (CommUtils.STR_NUMBER[0].equals(isLogin)) {
 		            	UserInfo userExist = OnLineUserListener.onLineUserMap.get(usermodel.getUserid());
+		            	// 已有用户
 		                if (null != userExist) {
-		                	msg=2;// 已有用户
+		                	msg=2;
 		                    isExist = true;
 		                }
 		            }
@@ -74,7 +75,7 @@ public class UserLoginController extends MultiActionController {
 		            	userInfo.setLoginTime(System.currentTimeMillis());
 		            	//设置session
 		            	request.getSession().setAttribute("ISLOGIN_KEY", "LOGIN");
-		            	request.getSession().setAttribute("userInfo", userInfo);
+		            	request.getSession().setAttribute(CommUtils.USERINFO, userInfo);
 		                msg=1;
 		            }
 		    	}
@@ -82,7 +83,7 @@ public class UserLoginController extends MultiActionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JSONUtil.strToJson(response, "msg", msg);
+		BaseJsonUtil.strToJson(response, "msg", msg);
     }
 	/**
 	 * 退出系统 清除session
@@ -94,8 +95,8 @@ public class UserLoginController extends MultiActionController {
     public String setLoginUserOut(HttpServletRequest request,
             HttpServletResponse response) {
         HttpSession session = request.getSession();
-        if (session.getAttribute(CommUtils.userInfo) != null) {
-        	UserInfo loginUser = (UserInfo) session.getAttribute("userInfo");
+        if (session.getAttribute(CommUtils.USERINFO) != null) {
+        	UserInfo loginUser = (UserInfo) session.getAttribute(CommUtils.USERINFO);
             session.setAttribute("loginTime", loginUser.getLoginTime());
             session.setAttribute("removeUserId", loginUser.getId());
             session.removeAttribute("userInfo");
@@ -121,8 +122,8 @@ public class UserLoginController extends MultiActionController {
             Gson gson = new Gson();
             List<TreeModel> list = new ArrayList<TreeModel>();
             boolean isDevelop = false;
-            if (org.apache.commons.lang.StringUtils.isNotEmpty(PropertiesUtil.getPropertyValues("SysModel"))) {
-                isDevelop = "develop".equals(PropertiesUtil.getPropertyValues("SysModel"));
+            if (org.apache.commons.lang.StringUtils.isNotEmpty(PropertiesUtil.getPropertyValues(CommUtils.SYS_MODEL))) {
+                isDevelop = "develop".equals(PropertiesUtil.getPropertyValues(CommUtils.SYS_MODEL));
             }
             if (isDevelop) {
                 list = treeInfoService.getAllDicInfo();
@@ -142,6 +143,6 @@ public class UserLoginController extends MultiActionController {
             resourceJson = gson.toJson(list);
             
         }
-        JSONUtil.writeResult(response, resourceJson);
+        BaseJsonUtil.writeResult(response, resourceJson);
     }
 }

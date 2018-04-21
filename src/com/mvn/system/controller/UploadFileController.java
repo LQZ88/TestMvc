@@ -9,7 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import com.mvn.utils.JSONUtil;
+import com.mvn.utils.BaseJsonUtil;
+/**
+ * 
+ * @author Admin
+ *
+ */
 @Controller
 @RequestMapping("/uploadFileController")
 public class UploadFileController extends MultiActionController {
@@ -20,6 +25,6 @@ public class UploadFileController extends MultiActionController {
     	String userImage = request.getParameter("userImage");
     	String guid = request.getParameter("guid");
     	System.out.println("\n\n"+userImage+"\n\n"+guid);
-    	JSONUtil.strToJson(response, "msg", true);
+    	BaseJsonUtil.strToJson(response, "msg", true);
     }
 }

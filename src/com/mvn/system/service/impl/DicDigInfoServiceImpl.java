@@ -12,8 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mvn.system.model.DicDigInfo;
 import com.mvn.system.service.DicDigInfoService;
 import com.mvn.system.service.dao.DicDigInfoMapper;
-
-@Service @Transactional
+/**
+ * 
+ * @author Admin
+ *
+ */
+@Service
+@Transactional(rollbackFor =  Exception.class)
 public class DicDigInfoServiceImpl implements DicDigInfoService {
 	protected static Log log = LogFactory.getLog(DicDigInfoServiceImpl.class);
 	@Resource

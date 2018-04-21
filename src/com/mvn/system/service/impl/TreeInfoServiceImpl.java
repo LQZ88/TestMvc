@@ -12,8 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mvn.system.model.TreeModel;
 import com.mvn.system.service.TreeInfoService;
 import com.mvn.system.service.dao.TreeInfoMapper;
-
-@Service @Transactional
+/**
+ * 
+ * @author Admin
+ *
+ */
+@Service
+@Transactional(rollbackFor =  Exception.class)
 public class TreeInfoServiceImpl implements TreeInfoService {
 	protected static Log log = LogFactory.getLog(TreeInfoServiceImpl.class);
 	@Resource

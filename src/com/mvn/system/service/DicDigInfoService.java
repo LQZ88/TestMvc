@@ -3,7 +3,11 @@ package com.mvn.system.service;
 import java.util.List;
 
 import com.mvn.system.model.DicDigInfo;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public interface DicDigInfoService {
     /*int deleteByPrimaryKey(Integer id);
 

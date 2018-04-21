@@ -1,8 +1,12 @@
 package com.mvn.utils;
 
 import java.util.UUID;
-
-public abstract class StringUtils {
+/**
+ * 
+ * @author Admin
+ *
+ */
+public abstract class BaseStringUtils {
 	public static boolean isEmpty(Object obj) {
 		return obj == null || obj.toString().length() == 0;
 	}

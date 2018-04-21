@@ -10,7 +10,11 @@ import java.util.regex.Pattern;
 
 import com.mvn.system.model.DicInfo;
 import com.mvn.system.model.DicRoleInfo;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class OtherUtil {
     /**
      * 判断内容是否不为空
@@ -54,7 +58,7 @@ public class OtherUtil {
         nf.setMaximumFractionDigits(2);
         return nf.format(o);
     }
-    private final static Pattern pt=Pattern.compile("\\|", Pattern.CASE_INSENSITIVE);
+    private final static Pattern PATTERN=Pattern.compile("\\|", Pattern.CASE_INSENSITIVE);
     /**
      * 判断“|”在字符串中出现个数
      * @param str内容
@@ -62,7 +66,7 @@ public class OtherUtil {
      */
     public static int numCharString(String str) {
         int num = 0;
-        Matcher mc = pt.matcher(str);
+        Matcher mc = PATTERN.matcher(str);
         while (mc.find()){
             num++;
         }
@@ -89,7 +93,7 @@ public class OtherUtil {
     }
     public static Boolean isBoolean(String str){
     	boolean flag = false;
-    	if(str.contains(CommUtils.strNumber[1])||CommUtils.strNumber[1].equals(str)){
+    	if(str.contains(CommUtils.STR_NUMBER[1])||CommUtils.STR_NUMBER[1].equals(str)){
     		flag = true;
     	}
     	return flag;

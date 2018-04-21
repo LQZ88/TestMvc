@@ -14,8 +14,13 @@ import com.mvn.system.model.UserLoginInfo;
 import com.mvn.system.model.UserRoleInfo;
 import com.mvn.system.service.UserInfoService;
 import com.mvn.system.service.dao.UserInfoMapper;
-
-@Service @Transactional
+/**
+ * 
+ * @author Admin
+ *
+ */
+@Service 
+@Transactional(rollbackFor =  Exception.class)
 public class UserInfoServiceImpl implements UserInfoService {
 	protected static Log log = LogFactory.getLog(UserInfoServiceImpl.class);
 	@Resource
@@ -48,8 +53,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	
 	@Override
-	public UserLoginInfo getLoginUserInfo(String LoginName) {
-		return userInfoMapper.getLoginUserInfo(LoginName);
+	public UserLoginInfo getLoginUserInfo(String loginName) {
+		return userInfoMapper.getLoginUserInfo(loginName);
 	}
 	@Override
 	public void saveLoginUserInfoData(UserLoginInfo model) {

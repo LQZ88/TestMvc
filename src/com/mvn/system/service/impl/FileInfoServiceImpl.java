@@ -12,8 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mvn.system.model.FileInfo;
 import com.mvn.system.service.FileInfoService;
 import com.mvn.system.service.dao.FileInfoMapper;
-
-@Service @Transactional
+/**
+ * 
+ * @author Admin
+ *
+ */
+@Service 
+@Transactional(rollbackFor =  Exception.class)
 public class FileInfoServiceImpl implements FileInfoService {
 	protected static Log log = LogFactory.getLog(FileInfoServiceImpl.class);
 	@Resource

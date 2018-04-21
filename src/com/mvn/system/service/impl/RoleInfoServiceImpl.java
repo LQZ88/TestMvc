@@ -13,8 +13,13 @@ import com.mvn.system.model.DicRoleInfo;
 import com.mvn.system.model.RoleInfo;
 import com.mvn.system.service.RoleInfoService;
 import com.mvn.system.service.dao.RoleInfoMapper;
-
-@Service @Transactional
+/**
+ * 
+ * @author Admin
+ *
+ */
+@Service 
+@Transactional(rollbackFor =  Exception.class)
 public class RoleInfoServiceImpl implements RoleInfoService {
 	protected static Log log = LogFactory.getLog(RoleInfoServiceImpl.class);
 	@Resource

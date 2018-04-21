@@ -5,6 +5,11 @@ import java.util.List;
 import com.mvn.system.model.DicRoleInfo;
 import com.mvn.system.model.RoleInfo;
 import com.mvn.utils.MyBatisRepository;
+/**
+ * 
+ * @author Admin
+ *
+ */
 @MyBatisRepository
 public interface RoleInfoMapper {
 

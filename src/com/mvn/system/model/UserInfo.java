@@ -1,7 +1,11 @@
 package com.mvn.system.model;
 
 import java.util.Date;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class UserInfo extends UserLoginInfo {
     private String id;
     private String usercode;

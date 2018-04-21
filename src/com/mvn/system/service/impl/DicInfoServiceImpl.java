@@ -13,8 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mvn.system.model.DicInfo;
 import com.mvn.system.service.DicInfoService;
 import com.mvn.system.service.dao.DicInfoMapper;
-
-@Service @Transactional
+/**
+ * 
+ * @author Admin
+ *
+ */
+@Service 
+@Transactional(rollbackFor =  Exception.class)
 public class DicInfoServiceImpl implements DicInfoService {
 	protected static Log log = LogFactory.getLog(DicInfoServiceImpl.class);
 	@Resource

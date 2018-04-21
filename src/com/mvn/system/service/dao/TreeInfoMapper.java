@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.mvn.system.model.TreeModel;
 import com.mvn.utils.MyBatisRepository;
+/**
+ * 
+ * @author Admin
+ *
+ */
 @MyBatisRepository
 public interface TreeInfoMapper {
 	/**

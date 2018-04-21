@@ -5,7 +5,11 @@ import java.util.List;
 
 import com.mvn.system.model.TreeModel;
 
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public interface TreeInfoService {
 	/**
 	 * 查询所有资源

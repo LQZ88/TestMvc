@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.mvn.system.model.DicDigInfo;
 import com.mvn.utils.MyBatisRepository;
+/**
+ * 
+ * @author Admin
+ *
+ */
 @MyBatisRepository
 public interface DicDigInfoMapper {
     /*int deleteByPrimaryKey(Integer id);

@@ -27,7 +27,7 @@ import com.mvn.system.service.FileInfoService;
 import com.mvn.system.service.RoleInfoService;
 import com.mvn.system.service.UserInfoService;
 import com.mvn.utils.DateUtils;
-import com.mvn.utils.JSONUtil;
+import com.mvn.utils.BaseJsonUtil;
 import com.mvn.utils.MyPassUtils;
 import com.mvn.utils.OtherUtil;
 import com.mvn.utils.UUIDGenerator;
@@ -66,7 +66,7 @@ public class UserInfoController extends MultiActionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JSONUtil.jsonObjectResult(response, list, count);
+		BaseJsonUtil.jsonObjectResult(response, list, count);
     }
 	/**
 	 * 验证编号是否存在
@@ -78,9 +78,9 @@ public class UserInfoController extends MultiActionController {
     public void getUserInfoCode(HttpServletRequest request, HttpServletResponse response,UserInfo model){
 		UserInfo userInfo = userInfoService.getUserInfo(model);
 	    if (OtherUtil.measureNotNull(userInfo)) {
-	    	JSONUtil.Print(response, false);
+	    	BaseJsonUtil.printInfo(response, false);
 	    } else {
-	    	JSONUtil.Print(response, true);
+	    	BaseJsonUtil.printInfo(response, true);
 	    }
 	}
 	/**
@@ -165,10 +165,10 @@ public class UserInfoController extends MultiActionController {
 				//保存头像信息
 				fileInfoService.saveFileInfo(fileInfo);
 			}
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
     }
 	/**
@@ -244,10 +244,10 @@ public class UserInfoController extends MultiActionController {
 				//添加用户信息
 				userInfoService.editUserInfoData(model);
 			}
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
     }
 	/**
@@ -271,7 +271,7 @@ public class UserInfoController extends MultiActionController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		JSONUtil.Print(response, filetexts);
+		BaseJsonUtil.printInfo(response, filetexts);
 	}
 	/**
 	 * 启用禁用用户
@@ -294,10 +294,10 @@ public class UserInfoController extends MultiActionController {
 			info.setState(OtherUtil.isBoolean(state));
 			userInfoService.editUserInfoData(user);
 			userInfoService.editLoginUserInfoData(info);
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
 			logger.error("修改失败");
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
 	}
 	/**
@@ -368,10 +368,10 @@ public class UserInfoController extends MultiActionController {
 					}
 				}
 			}
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
 			logger.error("修改失败");
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
 	}
 	/**
@@ -395,9 +395,9 @@ public class UserInfoController extends MultiActionController {
 				bean.setPasscode(passcode);
 				userInfoService.editLoginUserInfoData(bean);
 			}
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
 	}
 }

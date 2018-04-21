@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class SpecialCharaFilter extends OncePerRequestFilter {
 
     @Override
@@ -40,14 +44,18 @@ public class SpecialCharaFilter extends OncePerRequestFilter {
         public ParameterRequestWrapper(HttpServletRequest request) {
             super(request);
         }
+        /**
+         * 重写getParameter
+         */
         @Override
-        // 重写getParameter
         public String getParameter(String name) {
             // 返回值之前 先进行过滤
             return filterDangerString(super.getParameter(name));
         }
+	    /**
+	     *  重写getParameterValues
+	     */
         @Override
-        // 重写getParameterValues
         public String[] getParameterValues(String name) {
             // 返回值之前 先进行过滤
             String[] values = super.getParameterValues(name);

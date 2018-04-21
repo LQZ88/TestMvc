@@ -18,22 +18,32 @@ import org.apache.commons.logging.LogFactory;
 import com.google.gson.JsonObject;
 import com.mvn.system.model.UserInfo;
 import com.mvn.utils.CommUtils;
-import com.mvn.utils.JSONUtil;
+import com.mvn.utils.BaseJsonUtil;
 import com.mvn.utils.PropertiesUtil;
 
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class LoginValidityCheck implements Filter {
     protected static final Log logger = LogFactory.getLog(LoginValidityCheck.class);
     private static final String XHR_OBJECT_NAME = "XMLHttpRequest";
     private static final String HEADER_REQUEST_WITH = "x-requested-with";
     private FilterConfig filterConfig = null;
-    private boolean isSingleLogin = false;// 是否只能在一个地方登录默认false
+    /** 是否只能在一个地方登录默认false*/
+    private boolean isSingleLogin = false;
     private boolean isOtherLogin = false;
-    private String[] freePages;//过滤访问
-    private String toPage;//没有登陆返回
+    /**过滤访问*/
+    private String[] freePages;
+    /**没有登陆返回*/
+    private String toPage;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        String isLogin = PropertiesUtil.getPropertyValues("isLogin");//获取配置的是否 只能在一个地方登陆
-        isSingleLogin = "0".equals(isLogin)?false:true;//将字符转换为boolean类型
+    	//获取配置的是否 只能在一个地方登陆
+        String isLogin = PropertiesUtil.getPropertyValues("isLogin");
+        //将字符转换为boolean类型
+        isSingleLogin = "0".equals(isLogin)?false:true;
         this.filterConfig = filterConfig;
         String strPages = null;
         StringTokenizer strTokenizer = null;
@@ -72,15 +82,16 @@ public class LoginValidityCheck implements Filter {
                 String strToPageURL = request.getContextPath() + toPage;
                 logger.debug("strToPageURL:"+strToPageURL);
                 boolean isajax = isAjaxSubmit(request);
-                if (isajax) {//ajax
+                //ajax
+                if (isajax) {
                     doFilter = false;
                     JsonObject jo = new JsonObject();
                     jo.addProperty("PERMISSION", "NO");
                     // 不加下面2个属性，在datagrid load 时会报错
                     jo.addProperty("rows", "");
                     jo.addProperty("total", 0);
-                    JSONUtil.writeResult(response, jo);
-                } else if (strRequestURI.indexOf(CommUtils.strType[1]) != -1 ||strRequestURI.indexOf(CommUtils.strType[0])!=-1) {
+                    BaseJsonUtil.writeResult(response, jo);
+                } else if (strRequestURI.indexOf(CommUtils.STR_TYPE[1]) != -1 ||strRequestURI.indexOf(CommUtils.STR_TYPE[0])!=-1) {
                     doFilter = false;
                     StringBuffer outString = new StringBuffer();
                     outString.append("<script type=\"text/javascript\">");
@@ -137,9 +148,11 @@ public class LoginValidityCheck implements Filter {
             return false;
         } else {
         	UserInfo onLineUser = OnLineUserListener.onLineUserMap.get(currentSessionLoginUser.getId());
-            if (null == onLineUser) {//需要在用户禁用功能增加清除在线用户 判断才能生效 为空表示登录后被管理员禁用了
+            if (null == onLineUser) {
+            	//需要在用户禁用功能增加清除在线用户 判断才能生效 为空表示登录后被管理员禁用了
                 return false;
-            } else {// session 中用户的登录时间
+            } else {
+            	// session 中用户的登录时间
                 long loginTime = currentSessionLoginUser.getLoginTime();
                 // 时间不相等,并且只能在一处登录为true 判断登录时间是否相等，如果不相等 踢出不相等的登录
                 if (isSingleLogin && onLineUser.getLoginTime() != loginTime) {

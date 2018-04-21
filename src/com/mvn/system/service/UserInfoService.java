@@ -7,7 +7,11 @@ import com.mvn.system.model.UserInfo;
 import com.mvn.system.model.UserLoginInfo;
 import com.mvn.system.model.UserRoleInfo;
 
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public interface UserInfoService {
 	/**
 	 * 获取用户登录信息
@@ -24,10 +28,10 @@ public interface UserInfoService {
 	
 	/**
 	 * 获取登录信息
-	 * @param LoginName 用户名称
+	 * @param loginName 用户名称
 	 * @return
 	 */
-	public UserLoginInfo getLoginUserInfo(String LoginName);
+	public UserLoginInfo getLoginUserInfo(String loginName);
 	public void saveLoginUserInfoData(UserLoginInfo model);
 	public void editLoginUserInfoData(UserLoginInfo model);
 

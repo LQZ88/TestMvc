@@ -1,6 +1,10 @@
 package com.mvn.system.model;
-
-public class ZTree {
+/**
+ * 
+ * @author Admin
+ *
+ */
+public class Ztree {
 	private String id;
     private String pId;
     private Long parentId;

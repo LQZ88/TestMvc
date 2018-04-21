@@ -4,7 +4,11 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class SystemInitServlet extends HttpServlet {
 	private static final long serialVersionUID = -2997009340063830645L;
 

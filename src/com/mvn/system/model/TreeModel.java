@@ -1,4 +1,8 @@
 package com.mvn.system.model;
-
-public class TreeModel extends ZTree {
+/**
+ * 
+ * @author Admin
+ *
+ */
+public class TreeModel extends Ztree {
 }

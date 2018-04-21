@@ -5,6 +5,11 @@ import java.util.List;
 
 import com.mvn.system.model.DicInfo;
 import com.mvn.utils.MyBatisRepository;
+/***
+ * 
+ * @author Admin
+ *
+ */
 @MyBatisRepository
 public interface DicInfoMapper {
 

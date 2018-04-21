@@ -6,7 +6,11 @@ import java.util.List;
 import com.mvn.system.model.DicRoleInfo;
 import com.mvn.system.model.RoleInfo;
 
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public interface RoleInfoService {
 	
 	public List<RoleInfo> selectRoleInfoByList(RoleInfo model);

@@ -23,7 +23,7 @@ import com.mvn.system.model.RoleInfo;
 import com.mvn.system.service.DicInfoService;
 import com.mvn.system.service.RoleInfoService;
 import com.mvn.system.service.UserInfoService;
-import com.mvn.utils.JSONUtil;
+import com.mvn.utils.BaseJsonUtil;
 import com.mvn.utils.OtherUtil;
 import com.mvn.utils.UUIDGenerator;
 
@@ -63,7 +63,7 @@ public class RoleInfoController extends MultiActionController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JSONUtil.jsonObjectResult(response, list, count);
+		BaseJsonUtil.jsonObjectResult(response, list, count);
     }
 	/**
 	 * 保存角色信息
@@ -105,10 +105,10 @@ public class RoleInfoController extends MultiActionController {
 					bean.setId(UUIDGenerator.getUUID());
 				}
 			}
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
     }
 	/**
@@ -148,7 +148,7 @@ public class RoleInfoController extends MultiActionController {
         }else{
         	list = OtherUtil.dicTreeData(dicList, null);
         }
-        JSONUtil.Print(response, JSONArray.fromObject(list));
+        BaseJsonUtil.printInfo(response, JSONArray.fromObject(list));
     }
 	/**
 	 * 修改角色信息和角色菜单数据
@@ -191,10 +191,10 @@ public class RoleInfoController extends MultiActionController {
 					bean.setId(UUIDGenerator.getUUID());
 				}
 			}
-			JSONUtil.strToJson(response, "msg", true);
+			BaseJsonUtil.strToJson(response, "msg", true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			JSONUtil.strToJson(response, "msg", false);
+			BaseJsonUtil.strToJson(response, "msg", false);
 		}
     }
 	

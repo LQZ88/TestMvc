@@ -21,7 +21,7 @@ import com.mvn.system.model.DicInfo;
 import com.mvn.system.service.DicDigInfoService;
 import com.mvn.system.service.DicInfoService;
 import com.mvn.utils.CommUtils;
-import com.mvn.utils.JSONUtil;
+import com.mvn.utils.BaseJsonUtil;
 import com.mvn.utils.OtherUtil;
 
 import net.sf.json.JSONArray;
@@ -48,7 +48,7 @@ public class DicInfoController extends MultiActionController {
     public void getDicInfoList(HttpServletRequest request, HttpServletResponse response) {
 		String dicId = request.getParameter("dicId");
 		List<DicInfo> dicList = dicInfoService.getDicInfoNextById(Integer.parseInt(dicId));
-        JSONUtil.jsonObjectResult(response, dicList);
+        BaseJsonUtil.jsonObjectResult(response, dicList);
     }
 	/**
 	 * 获取树形菜单数据
@@ -60,7 +60,7 @@ public class DicInfoController extends MultiActionController {
     public void getTreeMenu(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<DicInfo> resourceList = dicInfoService.getDicInfoByAll();
         List<String> list = OtherUtil.dicTreeData(resourceList, null);
-        JSONUtil.Print(response, JSONArray.fromObject(list));
+        BaseJsonUtil.printInfo(response, JSONArray.fromObject(list));
     }
 	
 	/**
@@ -79,7 +79,7 @@ public class DicInfoController extends MultiActionController {
 		}catch(Exception e){
 			log.error("获取资源类型集合异常", e);
 		}
-		JSONUtil.jsonArrayResult(response, JSONArray.fromObject(sysDicList));
+		BaseJsonUtil.jsonArrayResult(response, JSONArray.fromObject(sysDicList));
 	}
 	/**
 	 * 获取所有菜单资源数据的id和name值数组
@@ -90,14 +90,14 @@ public class DicInfoController extends MultiActionController {
 	public void findDicInfoByNameJson(HttpServletRequest reuqest, HttpServletResponse response){
 		List<HashMap<String, Object>> dicList = new ArrayList<HashMap<String, Object>>();
 		try{
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			HashMap<String, Object> map = new HashMap<String, Object>(CommUtils.DEFAULT_HASHMAP_SIZE);
 			map.put("id", -1);map.put("name", "请选择......");
 			dicList = dicInfoService.findDicInfoByNameJson();
 			dicList.add(0, map);
 		}catch(Exception e){
 			log.error("获取所有菜单资源数据的id和name值数组集合异常", e);
 		}
-		JSONUtil.jsonArrayResult(response, JSONArray.fromObject(dicList));
+		BaseJsonUtil.jsonArrayResult(response, JSONArray.fromObject(dicList));
 	}
 	/**
 	 * 到添加菜单资源数据页面
@@ -146,16 +146,16 @@ public class DicInfoController extends MultiActionController {
         String oper = request.getParameter("oper");
         try {
             if (OtherUtil.measureNotNull(oper)) {
-                if (CommUtils.isSave.equals(oper)) {
+                if (CommUtils.SAVE.equals(oper)) {
                 	dicInfoService.saveDicInfo(dicInfo);
-                } else if (CommUtils.isUpdate.equals(oper)) {
+                } else if (CommUtils.UPDATE.equals(oper)) {
                 	dicInfoService.updateDicInfo(dicInfo);
                     return;
                 }
             }
-            JSONUtil.Print(response, "true");
+            BaseJsonUtil.printInfo(response, "true");
         } catch (Exception e) {
-        	JSONUtil.Print(response, "false");
+        	BaseJsonUtil.printInfo(response, "false");
         }
     }
 	/**
@@ -169,9 +169,9 @@ public class DicInfoController extends MultiActionController {
 			String dicInfoCode = request.getParameter("dicInfoCode");
 			DicInfo dicInfo = dicInfoService.getdicInfoCode(dicInfoCode);
 		    if (OtherUtil.measureNotNull(dicInfo)) {
-		    	JSONUtil.Print(response, false);
+		    	BaseJsonUtil.printInfo(response, false);
 		    } else {
-		    	JSONUtil.Print(response, true);
+		    	BaseJsonUtil.printInfo(response, true);
 		    }
 		} catch (Exception e) {
         	logger.error(e);

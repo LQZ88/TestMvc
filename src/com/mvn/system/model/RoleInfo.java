@@ -1,7 +1,11 @@
 package com.mvn.system.model;
 
 import java.util.Date;
-
+/**
+ * 
+ * @author Admin
+ *
+ */
 public class RoleInfo {
     private String id;
 
